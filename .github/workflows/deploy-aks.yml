@@ -1,8 +1,6 @@
 name: build_deploy_aks
 on:
-  push:
-    paths:
-      - "azure-vote/**"
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,8 +16,8 @@ jobs:
           tenant: ${{ secrets.tenant }}
           registry: ${{ secrets.registry }}
           repository: ${{ secrets.repository }}
-          image:  azure-vote-front
-          folder: azure-vote
+          image:  product-service
+          folder: src/product-service/
           branch: master
           tag: ${{ github.sha }}
       - name: Azure login
@@ -36,12 +34,12 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
-      - name: Deploy to AKS
-        id: deploy-aks
-        uses: Azure/k8s-deploy@v4
-        with:
-          namespace: 'default'
-          manifests: |
-             azure-vote-all-in-one-redis.yaml
-          images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/azure-vote-front:${{ github.sha }}'
-          pull-images: false
+      # - name: Deploy to AKS
+      #   id: deploy-aks
+      #   uses: Azure/k8s-deploy@v4
+      #   with:
+      #     namespace: 'default'
+      #     manifests: |
+      #        azure-vote-all-in-one-redis.yaml
+      #     images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/azure-vote-front:${{ github.sha }}'
+      #     pull-images: false
