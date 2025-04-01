@@ -22,12 +22,14 @@ jobs:
     - name: 'Docker Login'
       uses: azure/docker-login@v1
       with:
-        login-server: 'optaksacr.azurecr.io'
+        login-server: ${{ secrets.registry }}
         username: ${{ secrets.service_principal }}
         password: ${{ secrets.service_principal_password }}
-    - run: |
-        docker build src/product-service/ -t optaksacr.azurecr.io/sampleapp:${{ github.sha }}
-        docker push optaksacr.azurecr.io/sampleapp:${{ github.sha }}
+        
+    - name: 'Push to acr'
+      run: |
+        docker build src/product-service/ -t ${{ secrets.registry }}/product-service:${{ github.sha }}
+        docker push ${{ secrets.registry }}/product-service:${{ github.sha }}
     # - name: Build the frontend image and push it to ACR
     #   uses: docker/build-push-action@v5
     #   with:
