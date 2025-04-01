@@ -2,7 +2,7 @@ name: product_service_deploy_aks
 on:
   workflow_dispatch:
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code 
@@ -28,5 +28,5 @@ jobs:
           namespace: 'default'
           manifests: |
              product-deploy-aks.yaml
-          images: '${{ secrets.registry }}/product-service:${{ github.sha }}'
+          images: '${{ secrets.registry }}/product-service:c4bdb6ab730ab78099b8acc2fbca528f4f8c4a77'
           pull-images: false
