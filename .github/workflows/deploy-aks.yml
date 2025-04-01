@@ -26,7 +26,7 @@ jobs:
         username: ${{ secrets.service_principal }}
         password: ${{ secrets.service_principal_password }}
     - run: |
-        docker build src/product-service/Dockerfile -t optaksacr.azurecr.io/sampleapp:${{ github.sha }}
+        docker build src/product-service/ -t optaksacr.azurecr.io/sampleapp:${{ github.sha }}
         docker push optaksacr.azurecr.io/sampleapp:${{ github.sha }}
     # - name: Build the frontend image and push it to ACR
     #   uses: docker/build-push-action@v5
