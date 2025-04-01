@@ -2,7 +2,7 @@ name: delete_aks_application
 on:
   workflow_dispatch:
 jobs:
-  build:
+  destroy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code 
